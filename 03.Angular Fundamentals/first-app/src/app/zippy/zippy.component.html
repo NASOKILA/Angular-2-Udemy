@@ -1,0 +1,19 @@
+
+  <button class="btn btn-primary">Click</button>
+<div class="zippy">
+  <div class="zippy-heading"
+  [class.expanded]="isExpanded"
+  (click)="expand($event)">
+    {{ title }}
+    <span class="glyphicon"
+      [ngClass]="{
+        'glyphicon-chevron-up' : isExpanded,
+        'glyphicon-chevron-down' : !isExpanded
+      }">
+    </span>
+  </div>
+  <div class="zippy-body"
+  [hidden]="!isExpanded">
+    <ng-content></ng-content>
+  </div>
+</div>

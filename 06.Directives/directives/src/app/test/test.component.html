@@ -1,0 +1,106 @@
+
+<div *ngIf="courses.length > 0">
+  <ul>
+    <li *ngFor="let course of courses"> {{ course }} </li>
+  </ul>
+</div>
+
+<div *ngIf="courses.length < 1">
+  No courses avaiable.
+</div>
+
+<br/><br/><br/><br/>
+ng-template :
+<br/>
+<div *ngIf="numbers.length > 1; then Numbers else NoNumbers"></div>
+
+<ng-template #Numbers>
+  Numbers avalible ! 
+</ng-template>
+<ng-template #NoNumbers>
+  No numbers avalible ! 
+</ng-template>
+
+<br/><br/><br/><br/>
+
+Hidden Keyword BOTH DIVS EXIST IN THE DOM BUT ONE WILL HAVE A hitten PROPERTY:
+<br/>
+<div [hidden]="courses.length < 1">
+  Courses !
+</div>
+<div [hidden]="courses.length > 1">
+  No Courses !
+</div>
+
+<br/><br/><br/><br/>
+
+<ul class="nav nav-pills">
+  <li><a class="btn btn-lg btn-outline-primary" [class.active]="viewMode == 'map'" (click)="mapViewChange()">MapView</a></li>
+  <li><a class="btn btn-lg btn-outline-primary" [class.active]="viewMode == 'list'" (click)="listViewChange()">ListView</a></li> 
+</ul>
+
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'"><h2>Map View</h2></div>
+  <div *ngSwitchCase="'list'"><h2>List View</h2></div>
+  <div *ngSwitchDefault><h2>No View Set</h2></div> <!--It has no value, its like an attribute.-->
+</div>
+
+<br/><br/><br/><br/>
+
+'index' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; index as i"> <!--We can use the index variable as a numerator !-->
+      Index : {{ i }} | Id : {{ person.id }} | Name : {{ person.name }}
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'odd' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; odd as isOdd"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isOdd">( ODD )</span>
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'even' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; even as isEven"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isEven">( EVEN )</span>
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'first' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; first as isFirst"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isFirst">( FIRST )</span>
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'last' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; last as isLast"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isLast">( LAST )</span>
+    </li>
+  </ul>
+</div>

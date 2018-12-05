@@ -1,0 +1,26 @@
+<div class="container">
+
+  <h3>Form builder : </h3>
+  <form [formGroup]="form">
+    <label for="name">Name</label>
+    <input type="text" id="name" class="form-control" formControlName="name" />
+
+    <div formGroupName="contact">
+      <label for="email">Email</label>
+      <input type="text" id="email" class="form-control" formControlName="email"/>
+    
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" class="form-control" formControlName="phone"/>
+    </div>
+    
+    <label for="addTopic">Add Topic</label>
+    <input type="text" id="addTopic" #topic class="form-control" (keyup.enter)="addTopic(topic)"/>
+    
+    <label for="topics">Topics</label>
+    <ul class="list-group" id="topics">
+      <li class="list-group-item" (click)="deleteTopic(topic)" *ngFor="let topic of topics.controls">
+        {{ topic.value }}
+      </li>
+    </ul>
+  </form>
+</div>

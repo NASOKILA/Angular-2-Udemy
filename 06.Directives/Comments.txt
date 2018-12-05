@@ -1,0 +1,349 @@
+Directives:
+	These are *ngIf=""  *ngFor=""  *ngSwitchCase=""  AND MORE.
+	WE CAN BUILD OUR OWN DIRECTIVES.
+
+	IMPORTANT !!!
+	WE CAN USE THE [ngIf] INSTEAD OF TH ASTERISC '*' IF WE WANT TO.
+	WHEN WE USE THE ASTERISC ANGULAR TRANSFORMS IT INTO [] ANYWAY !!!!!
+
+
+
+Types of DOM elements: 
+	We use directives to modify the DOM.
+	There are 2 types of directives:
+	01.Structural directives - They modify the structure of the DOM by adding or removing DOM ELEMENTS. Like *ngIf="" and *ngFor=""
+	02.Addribute directives - They modify the ATTRIBUTES of the FOM elements.
+
+
+
+
+*ngIf="" directive :
+	We can call a function which returns true or false for something to be rendered with *inIf=""
+	We do not have to put the condition in the template, instead we can use a function to return that condition.
+	*ngIf="courses.length < 1" OR  *ngIf="CoursesAvaliable()" 
+
+
+
+
+ng-template : IMPORTANT !!!!!
+	THESE ARE SIMPLE BLOCKS OF COD !!!
+	WE CAN USE THIS BLOCK OF CORE IN A ELSE STATEMENTS
+	
+//IF THERE ARE NUMBERS AVALIABL WE RENDER THE Numbers ng-template ELSE THE NoNumbers ONE !!!
+
+<div *ngIf="numbers.length > 1; then Numbers else NoNumbers"></div> 
+  
+<ng-template #Numbers>
+  Numbers avalible ! 
+</ng-template>
+
+<ng-template #NoNumbers>
+  No numbers avalible ! 
+</ng-template>
+
+
+REMEMBER TO USE THE 'then' and 'else' keywords.
+
+
+
+
+
+
+Hidden Attribute :
+	This atribute is used to HIDE HTML ELEMENTS, we can use it instead of the *ngIf="" directive.
+	This is just the keyword 'hidden' it exists also in HTML !!!!
+
+	<div hidden> //With this keyword the div will be hidden !!!
+  		Some text ...
+	</div>
+
+
+	We can use a condition with the 'hidden' attribute
+	BOTH DIVS EXIST IN THE DOM BUT ONE WILL HAVE A hitten PROPERTY !!!
+	That is the main deference fron *ngIf="" !!!
+
+	In *ngIf="" the element does not exist, with the 'hidden' attribute the element exists but we cannot see it, it's hidden !
+	
+
+[nSwitchCase]="" directive :
+	It's just like the normal Switch Case in any programming language.
+
+
+//On click we change the view from 'map' to 'list' and viceversa
+<ul class="nav nav-pills">
+  <li><a class="btn btn-lg btn-outline-primary" [class.active]="viewMode == 'map'" (click)="mapViewChange()">MapView</a></li>
+  <li><a class="btn btn-lg btn-outline-primary" [class.active]="viewMode == 'list'" (click)="listViewChange()">ListView</a></li> 
+</ul>
+
+//Here we switch case it.
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'"><h2>Map View</h2></div>
+  <div *ngSwitchCase="'list'"><h2>List View</h2></div>
+  <div *ngSwitchDefault><h2>No View Set</h2></div> <!--It has no value, its like an attribute.-->
+</div>
+
+
+
+
+
+*ngFor="" directive :
+	We know this !
+	
+	
+Exported Value :  IMPORTANT !!!
+*ngFor="" directive with exported value 'index':
+	This is an Angular exported value used to enumerate what we are using in our ngFor="".
+	
+  <ul>
+    <li *ngFor="let person of people; index as i"> <!--We can use the index variable as a numerator !-->
+      Index : {{ i }} | Id : {{ person.id }} | Name : {{ person.name }}
+    </li>
+  </ul>
+
+	RESULT :
+	Index : 0 | Id : 13 | Name : Atanas
+	Index : 1 | Id : 21 | Name : Asen
+	Index : 2 | Id : 36 | Name : Mira
+	Index : 3 | Id : 14 | Name : Toni
+
+
+	
+
+
+EXPORTED VALUES (LOCAL VARIABLES) LIST :
+There are many exported values like 'index' :
+	'index',
+	'first',
+	'last',
+	'even',
+	'odd'
+
+
+
+'odd' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; odd as isOdd"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isOdd">( ODD )</span>
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'even' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; even as isEven"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isEven">( EVEN )</span>
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'first' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; first as isFirst"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isFirst">( FIRST )</span>
+    </li>
+  </ul>
+</div>
+
+<br/><br/>
+
+'last' local variavble :
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let person of people; last as isLast"> <!--We can use the index variable as a numerator !-->
+      Id : {{ person.id }} | Name : {{ person.name }}<span *ngIf="isLast">( LAST )</span>
+    </li>
+  </ul>
+</div>
+
+
+
+
+
+
+ngFor and Change Detection :
+	Angular changes the view when we change the state of an object in the back, this is very usefull !!!
+	
+
+
+
+
+*ngFor and trackBy property :
+
+<a class="btn btn-outline-primary" (click)="loadCourses3()">Load Courses 3</a>
+<ul>
+  <!--With trackBy WE CAN TRACK THEM BY SOMETHING IN THIS CASE WE USE A FUNCTION, WE ARE NOT CALLING THE METHOD, JUST SPECIFY ITS NAME ! -->
+  <li *ngFor="let course of courses3; trackBy: trackCourse"> 
+    Id : {{ course.id }} | Name : {{ course.name }}
+  </li>
+</ul>
+
+//We set the courses 
+loadCourses3(){
+    this.courses3 = [
+      { id : 1, name : "Course1"},
+      { id : 2, name : "Course2"},
+      { id : 3, name : "Course3"},
+      { id : 4, name : "Course4"},
+   ];
+}
+
+	
+  //WITH THIS FUNCTON WE TRACK THE COURSES BY ID.
+  //By tracking them like this they wont reload every time we click the button which is great for the memory and performance
+  //accepts two parameters
+trackCourse(index, course){
+    
+    //check if course exists   
+    return course ? course.id : undefined;
+ }
+
+	
+'trackBy' IS USED ONLY WHEN WE ARE WORKING WITH A VERY BIG LIST, IT IMPROVES THE PERFRMANCE IN THE PAGE.
+	
+
+
+
+
+
+*ngClass="" directive :
+	Earlier we used and saw the 'class binding'.
+
+<!--CLASS BINDING :-->
+<div>
+  <span 
+  [class.active]="isActive"  
+  class="btn btn-outline-primary"
+  (click)='clicked()'>Like</span>
+</div>
+
+  clicked(){
+    this.isActive = !this.isActive;
+  }
+
+
+
+	We can use the [ngClass] directive to switch between classes for an element, it's the same thing as class binding
+	but it's a more clean approach.
+
+  //It works with Key Value pairs, the key is the name of the class and the value is the condition that we pass to it !
+  //THE KEY COMES IN QUOTES '' 
+<div>
+  <span 
+  class="btn btn-outline-primary"
+  [ngClass]="{
+    'active' : isActive2
+  }" 
+  (click)='clicked2()'>Like</span>
+</div>
+
+  clicked2(){
+    this.isActive2 = !this.isActive2;
+  }
+
+
+	The benefit of ngClass directive is that if we have many classes we do not have to repeat the class binding for every class.
+	IT DOES NOT WORK ONLY FOR CLASSES, WE CAN USE IT TO MODIFY ANY ATTRIBUTE FOR A DOM ELEMENT !!!
+	 
+
+
+
+
+
+
+ngStyle directive :
+	Just like the before, we can use it instead of the style binding.
+	
+
+Style Binding :
+<br/>
+<div>
+    <span 
+    class="btn btn-outline-default"
+    [style.backgroundColor]="isStyled ? 'blue' : 'gray'"
+    [style.color]="isStyled ? 'white' : 'black'"
+    [style.borderRadius]="isStyled ? '10px' : '50px'"
+    (click)='styleMe()'>Style</span>
+</div>
+
+  styleMe(){
+    this.isStyled = !this.isStyled; 
+    console.log(this.isStyled)
+  }
+
+
+
+
+ngStyle directive :
+<br/>
+<div>
+    <span 
+    class="btn btn-outline-default"
+    [ngStyle]="{
+      'backgroundColor' : isStyled2 ? 'blue' : 'gray',
+      'color' : isStyled2 ? 'white' : 'black',
+      'borderRadius' : isStyled2 ? '10px' : '50px' 
+    }"
+    (click)='styleMe2()'>Style</span>
+</div>
+
+
+  styleMe2(){
+    this.isStyled2 = !this.isStyled2; 
+    console.log(this.isStyled2)
+  }
+
+
+	We can render classes instead of styles.
+
+
+
+
+
+
+Safe Traversal Operator: '?'
+	If a property is null or undefined it gives us console error, but we can use '?' in case the value is null or undefined and it's all ok
+
+	<h2>{{ task.assignee?.name }}</h2>
+
+	If its null it still keeps the element in the DOM but it's empty.
+	It's used alot with complex objects.
+	
+
+
+
+
+Creating Custom Directives :
+	We can use the CLI to generate a directive  ng g d directiveName
+	The generated directive automatically gets imported into the app.module nad added to the declarations : [] array.
+	In this array we include all our components, pipes and directives.
+
+	
+@HostListener('eventType') LISTENTS FOR DEFERENT TYPES OF EVENTS.
+
+  @HostListener('focus') onFocus(){
+    //Listens for a focus event
+    console.log('On Focus.')
+  }
+
+  @HostListener('blur') onBlur(){
+    //Listens for a blur event
+    console.log('On Blur.')
+  }
+
+
+
+'onFocus' event - this is when we click and set our mouse on something.
+'onBlur' event - this is when we click away from an element.
+
+ElementRef class gives us access to a DOM object

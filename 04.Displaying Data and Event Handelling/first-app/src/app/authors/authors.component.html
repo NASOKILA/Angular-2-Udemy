@@ -1,0 +1,29 @@
+<br/>
+<h1>
+  {{ title }}
+</h1>
+
+<ul>
+  <li *ngFor="let author of authors"> {{ author }}</li>
+</ul>
+
+<br/>
+
+<!--Class binding-->
+<div [class.active]="isActive">
+  Class binding !!!
+</div>
+
+<br/>
+
+<!--Class binding-->
+<div [style.background-color]="isActive ? 'green' : 'red'">
+  Style binding !!!
+</div>
+  
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+

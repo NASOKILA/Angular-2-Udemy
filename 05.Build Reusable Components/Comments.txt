@@ -1,0 +1,176 @@
+Change event.
+
+
+Component API
+	For a component to be more reusable we need to use Input() and Output() properties.
+	With Input() we pass data or a state to a component, with Output() we raise events from
+	this custom components.
+	The combination of the Input() and Output() properties make a Component API !!!!!!!!!!!
+
+
+@Input() property :
+	this make a property usable from the outside and it can be binded.
+	We can bind that property from the component that we created.
+	@Input() isFavorite : boolean = true;
+	Now we can use this isFavorite field from outside this component.
+
+
+Alias (Nicknames):
+	This is a nickname of an input property.
+	This goes into the Input like this Input('NicknameOfProperty').
+	When a propety has a nickname, we can chage its name but the view uses its nickname.
+	
+	<app-test [nicknameCreated]="post.isFavorite"></app-test>
+	@Input("nicknameCreated") isFavorite2 : boolean = true;
+
+	WE CAN ALSO USE ALIAS ON @Output() PROPERTIES.
+
+@Output property() :
+	
+	Event Emmitter() emmits an event and lets it known by everyone.
+	let event = new EventEmmitter();
+	event.emit();  //we raise an event and notify all subscriobers of it.
+	ITS SUBSCRIBERS IN OUR CASE IS THE COMPONENT THAT IS HANDELING THIS EVENT.
+
+
+Passing event dada:
+	let event = new EventEmmitter();
+	event.emit(true);  //we pass data thrue the event and we receive it in the component which is handeling this event.
+	Then the function that handles it receives it as a parameter.
+	onTestCompChanged(args)
+	{
+	}
+	
+	finally to make this work we need to pass $event into the function in the view so it receives the parameter
+	<app-test [nicknameCreated]="post.isTest" (change)="onTestCompChanged($event)"></app-test>
+
+	We can pass objects if we want.
+	
+
+
+Assign Output Properties:
+	@Output('change') change = new EventEmitter();		
+	//WE CAN USE Alias(Nicknames) for Output properties also.
+
+
+
+Templates:
+	IMPORTANT !!!
+	There are two ways of using templates in a component:
+	01. Having th HTML file separate and using  TemplateUrl : 'PathToHtmFile'.
+	02. Using Template : <h1>...</h1>  and having the HTML written on place.
+	
+	The second approach is better if we need a very small component, and when we use it and load the project,
+	on the browser requests we see that we have 1 less request because there is no externa file to be loaded.
+	The HTML gets bundled in the main.js file.
+	
+ 
+Styles :
+	There are 3 ways to style a component.
+	01. styleUrls : [...]    //Most used way
+	02. styles: ['...'] // We write the playn CSS code here, we still have an array here, dont know why
+	03. Write the CSS insade the HTML template.
+
+
+@Component({
+  selector: 'app-test',
+  templateUrl: './test.component.html',
+
+  styleUrls: ['./test.component.css'], // This gets ignored because Angular uses styles:[] because it's implemented last
+  styles : [`
+  .simpleDiv {
+    color : white;
+    background-color: green; 
+}
+  `],  
+})
+
+ANGULAR USES ONLY ONE WAY TO STYLE AND THAT IS THE LAST STYLES IMPLEMENTED, IN THE ABOVE EXAMPLE IT'S styels : [] ARRAY
+
+The styles into the component HTML file WILL ALWAYS BE APPLIED AND IT WILL OWERRIDA ANY PREVIOUS STYLE.
+
+
+
+SHadow DOM : IMPORTANT !!
+	This is about styling only one element and not other elements.
+
+	var el = document.querySelector('favorite');
+	
+	let root = el.createShadowRoot();
+
+	root.innerHTML = `
+		<style>h1 { color : red; }</style>  //WE DONT WANT THIS STYLE TO AFFECT THE ENTYRE APPLICATION SO WE USE SHADOWROOT.
+		<h1>Hello</h1>
+		
+	`
+
+View Encapsulation :
+
+
+
+
+
+
+
+
+
+Prefix components:
+	Change the selector of the component because it can crash with another component.
+@Component({
+  selector: 'bootstrap-panel',  // IF WE  ARE GOING TO USE REUSABLE COMPONENTS ALWAIS PREFIC THEM.
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.css']
+})
+export class PanelComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
+
+
+
+
+
+ngContent :
+	We can bind properties from another component and inject property values.
+
+
+//we inject properties into the ng-content tag and we distinguish tehn by using 'select' keyword.
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <ng-content select=".heading"></ng-content> //.heading will go here
+  </div>
+  <div class="panel-body"></div>
+    <ng-content select=".body"></ng-content> //.body will go here
+  </div>
+</div>
+
+
+//In the component from which we use the above specified component, in our case that is the App component,
+//this is how we bind the values into the above component: 
+<bootstrap-panel>
+  <div class="heading">HEADING INJECTED VALUE FROM APP COMPONENT</div>
+  <div class="body">BODY INJECTED VALUE FROM APP COMPONENT</div>
+</bootstrap-panel>
+
+
+
+
+ng-container :
+	Similar to the above example but if we use ng-container, instead of the div with some class in the App component
+	we will have only THE VALUE of that class.
+	
+
+
+With ng-container only the value will be injected and NOT the entire div like in the econd example 
+<bootstrap-panel>
+  <ng-container class="heading">HEADING INJECTED VALUE FROM APP COMPONENT IN ng-container TAG</ng-container>
+  <div class="body">BODY INJECTED VALUE FROM APP COMPONENT</div>
+</bootstrap-panel>
+
+

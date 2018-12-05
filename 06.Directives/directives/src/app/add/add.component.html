@@ -1,0 +1,111 @@
+<br/>
+<div>
+  <ul>
+    <li *ngFor="let course of courses;">
+      Id : {{ course.id }} | Name : {{ course.name }}
+      <button class="btn btn-outline-danger" (click)="removeCourse(course)">Remove</button>
+      <button class="btn btn-outline-warning" (click)="changeCourse(course)">Change</button>
+    </li>
+  </ul>
+</div>
+<a class="btn btn-outline-success" (click)="addCourse()">Add Course</a>
+
+
+<br/><br/><br/>
+
+<a class="btn btn-outline-primary" (click)="loadCourses2()">Load Courses 2</a>
+<ul>
+  <li *ngFor="let course of courses2;">
+    Id : {{ course.id }} | Name : {{ course.name }}
+  </li>
+</ul>
+
+<br/><br/>
+
+<a class="btn btn-outline-primary" (click)="loadCourses3()">Load Courses 3</a>
+<ul>
+  <!--With trackBy WE CAN TRACK THEM BY SOMETHING IN THIS CASE WE USE A FUNCTION, WE ARE NOT CALLING THE METHOD, JUST SPECIFY ITS NAME ! -->
+  <li *ngFor="let course of courses3; trackBy: trackCourse"> 
+    Id : {{ course.id }} | Name : {{ course.name }}
+  </li>
+</ul>
+
+
+<br/><br/><br/>
+
+Class Binding :
+<br/>
+<div>
+  <span 
+  [class.active]="isActive"  
+  class="btn btn-outline-primary"
+  (click)='clicked()'>Like</span>
+</div>
+
+<br/><br/>
+
+ngClass directive :
+<br/>
+<div>
+  <!--It works with Key Value pairs, the key is the name of the class and the value is the condition that we pass to it !
+  THE KEY COMES IN QUOTES '' -->
+  <span 
+  class="btn btn-outline-primary"
+  [ngClass]="{
+    'active' : isActive2
+  }" 
+  (click)='clicked2()'>Like</span>
+</div>
+
+<br/><br/>
+
+Style Binding :
+<br/>
+<div>
+    <span 
+    class="btn btn-outline-default"
+    [style.backgroundColor]="isStyled ? 'blue' : 'gray'"
+    [style.color]="isStyled ? 'white' : 'black'"
+    [style.borderRadius]="isStyled ? '10px' : '50px'"
+    (click)='styleMe()'>Style</span>
+</div>
+
+<br/><br/>
+
+
+ngStyle directive :
+<br/>
+<div>
+    <span 
+    class="btn btn-outline-default"
+    [ngStyle]="{
+      'backgroundColor' : isStyled2 ? 'blue' : 'gray',
+      'color' : isStyled2 ? 'white' : 'black',
+       'borderRadius' : isStyled2 ? '10px' : '50px' 
+    }"
+    (click)='styleMe2()'>Style</span>
+</div>
+
+
+<br/><br/><br/>
+
+
+Safe Traversal Operator : if the name is null or undefined it gives us console error, but we can use '?' in case the value is null or undefined and it's all ok
+If its null it still keeps the element in the DOM but it's empty :
+<br/>
+<h2>{{ task.assignee?.name }}</h2>
+
+
+<br/><br/><br/>
+
+
+Custom Directive :
+<br/>
+
+Transform field value into lowercase :
+<br/>
+<input type="text" appInputFormat [format]="'lowercase'" />
+<br/><br/>
+Transform field value into uppercase :
+<br/>
+<input type="text" appInputFormat [format]="'uppercase'" />

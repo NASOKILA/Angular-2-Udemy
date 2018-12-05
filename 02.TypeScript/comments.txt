@@ -1,0 +1,228 @@
+TypeScript is a dialect of JavaScript.
+Any valid JS code can be a valid TS code.
+TS has addidional features that current JS supported by the browsers do not have:
+01.Types of varibles, its optional and easyer to debug.
+02.OOP, properties, constructor, interfaces, access modifiers and more.
+03.In TypeScript we can catch errors AT COMPILE TIME, meaning we can fix them before they appear on our application..
+04.Tools like Intellicence.
+
+Browsers do not read TS code so we need to compie it.
+StmaScript 5 or (ES5) is the version of javascript that is supported by most browsers today.
+In (ES6) created in 2015 we have the 'let' keyword
+
+In typescript when we try to compile (tsc NameOfFile.ts) a file with errors it tells us we have an error and it still
+compilesthe code.
+to use the 'any' keyword for types is not a good practice.
+
+In typescript we have intellicence, this tool allowes us to complete a code without remembering the details about it.
+
+
+Type assertions: VAJNOOOOOOOO
+Ako ima me promenliva ot tip 'any' togava nqmam eintellcence i ne vijdame nikakvi pomagashit funkcii kato .endsWith() i drugi,
+vijdme gi samo ako imame promenliva sus tip kato 'string' naprimer.
+Kak se kastva vuv TSC let variable : any = "Atanas";     (<string>variable)     ili    (message as string)
+
+
+
+
+Arrow functions:
+In C# is Lambda Expression, In C# is called Arrow function.    
+(m) => {console.log(m)}, 
+(m) => (console.log(m)),  
+(m) => console.log(m), 
+m => (console.log(m))
+
+
+
+
+Custom Types in TypeScript:
+These are types that we create. For example we need a function to accept only one type of parameter which is an object
+{name: "NAME", age : "AGE"}, if we pass anything other than an object with thee properties the program failes.
+So we create a type exactly for this object {name: "NAME", age : "AGE"}.
+
+interface MyObjType {
+    name : string,
+    age : number
+}
+let log = (myObj : MyObjType) => {
+    console.log(myObj);
+}
+
+
+
+Classes:
+Cohesion means things that go together should be put in one unit. This unit is called a class, it groups related 
+properties and functions.
+
+class Point {
+
+    //fields
+    private x : number;
+    private y : number;
+    
+    constructor(x : number, y : number){
+        this.x = x;
+        this.y = y;
+    }
+
+    //methods
+    public draw = () => {
+        console.log("x = " + this.x);
+        console.log("y = " + this.y);
+    }
+    
+    public getDistance(point : Point) {
+        console.log("The distance is :" + ((this.x - point.x) + (this.y - point.y)).toString());
+    }
+    
+};
+
+let p = new Point(5, 10);
+p.draw();
+p.getDistance(new Point(6, 1));
+
+
+Objects are instances of classes.
+
+
+
+
+
+Constructors:
+In TS we CANNOT HAVE MULTIPLE CONSTRUCTORS, IN C# WE CAN.
+But we can have optional parameters in a constructor of a class
+
+constructor(name : string, age: number, gender? : Gender, married? : boolean){
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.married = married;
+    }
+
+IMPORTANT: Every prameter on the right side of the first optional parameter have to be optional too.
+This is a role with TS.
+
+Access Modifiers:
+There is no 'internal' access modifier in TS !
+By default the access modifier is 'public'
+
+
+
+Access Modifiers in constructors :
+TypeScript offers a nice way to create your fieds directly in the constructor:
+    constructor( private name : string, private age: number, private gender? : string ){}
+
+
+
+Properties:
+We can access properties by creating getters and setters within a class.
+
+class Person {
+
+    constructor( private name : string, private age: number, private gender? : string ){}
+
+    public getFullInfo(){
+
+        console.log("Information:");
+        console.log(this.name);
+        console.log(this.age);
+        if(this.gender){
+            console.log(this.gender)
+        }
+        console.log()
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    setName(newName : string){
+        this.name = newName;
+    }
+
+    getAge(){
+        return this.age;
+    }
+
+    setAge(newAge : number){
+        this.age = newAge;
+    }
+
+    getGender(){
+        return this.gender;
+    }
+    
+    setGender(newGender : string){
+        this.gender = newGender;
+    }
+    
+}
+
+SETTERS DO NOT RETURN A VALUE.
+
+
+We can also treat them as properties :
+
+set Gender(newGender : string){
+    return this.gender = newGender;
+}
+
+person.Gender = "Male";
+
+
+
+It's a good practice to add _ to our fields in the constructor:
+constructor( private _name : string, private _age: number, private _gender? : string ){}
+
+
+
+
+
+
+Modules:
+Its about importing an exporting classes or other and use them in other files.
+WE CAN EXPORT CLASSES, FUNCTION, OBJECTS OR JUST VARIABLES.
+
+POINT FILE:
+export class Point {
+
+    constructor( private _x? : number, private _y? : number ){}
+        
+    getPoints(){
+        console.log("X : " + this._x);
+        console.log("Y : " + this._y);
+    }
+}
+
+MAIN FILE:
+import { Point }  from './point';
+
+let point = new Point(5, 5);
+
+point.getPoints();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

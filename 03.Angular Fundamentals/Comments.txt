@@ -1,0 +1,84 @@
+What makes a normal class into a component is the { Component } interface from @angular/core.
+Otherwise is just a normal class.
+
+@Component({
+  selector : 'NAME OF THE COMPONENT'
+  templateURL : 'NAME OF THE HTML FILE'   // WE CAN USE JUST 'template'
+  styleUrls : 'AL STYLE FILES APPLIED TO THIS COMPONENT' // WE CAN USE PLAIN CSS HERE ALSO
+})
+export class CoursesComponent implements OnInit {
+	constructor(){}
+	
+	ngOnInit(){
+		//runs before the component loads
+	}
+}
+
+
+
+Templates :
+	In the HTML file we can use:
+	{{ variableName }}
+	and it will display
+	
+	We can use a function which returns the variable and the variable can be private.
+
+
+
+Directives:
+	They ae used to manipulate the DOM Tree !!!
+	*ngIf() and *ngFor() 
+
+
+
+Services :
+	Some of the request to an API or to Database have to be on a separate class, and that is the service class.
+	Use Services every time, it's a good practice.
+	This approach is very usefull when we write unit tests. 
+	We can have services for every component.
+	WE CAN HAVE MORE LOGIC IN THESE SERVICES AND THIS LOGIC IS SEPARATE FROM THE COMPONENT.
+	WE CAN REUSE THAT LOGIC EVERYWHERE WE WANT.
+
+
+
+
+Dependency Injection :
+	Angular can inject dependencies.
+
+	We can pass in services and use them
+	IMPORTANT !!! IF WE USE THE 'new' KEYWORD WE WONT BE ABLE TO UNIT TEST PROPERLY THIS CLASS.
+	NEVER USE THE 'new' KEYWORD, USER DEPENDENCY INJECTION.
+	
+	In addition if we change something in the constructor of the SERVICE Class then we have to go change the code
+	Everywhere we used the 'new' keyword.
+	With Dependency injection we dont need to go and do this.
+
+	If we have used Dependency Injection in our constructor, later on when we unit test the component we can create 
+	a fake implementation of that service instead of a real one.
+
+	WE HAVE TO REGISTER OUR SERVICES IN THE Providers : []   ARRAY !!!!  IF WE FORGET THEN THE DEPENDENCY INJECTION WILL NOT WORK !!!
+	
+
+WHAT IS SINGLETON PATTERN ?
+	When we have a service in the providers array, Angular creates only one instance of it and store's it in the memory.
+	And then all the components which need to use that service, they user that single instance from the memory.
+	THIS IS CALLED SINGLETON !!!!!!!!!!!!
+	A SINGLE INSTANCE OF THAT CLASS EXISTS IN THE MEMORY AND  IT IS USED FROM EVERY COMPONENT THAT NEEDS IT !!!
+
+
+
+
+Injectable :
+	imort { Injectable } from '@angular/core';
+
+	Why do we need @Injectable({}) in our services ?
+	We need it only if that service users a dependency in it's constructor !!!!!!!	
+	Injectable means that Angular will have to inject dependencies into the constructor of that service. 
+
+
+
+
+CTRL + T :
+	With this combination we can search for a file.
+
+

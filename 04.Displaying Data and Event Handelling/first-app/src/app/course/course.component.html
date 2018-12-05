@@ -1,0 +1,96 @@
+<p>
+  {{ getTitle() }}
+</p>
+
+<ul *ngFor="let course of courses">
+  <li>{{ course }}</li>
+</ul>
+
+<img src="{{ image }}"/> <!--String Interpolation-->
+
+<br/>
+<br/>
+
+<img [src]="image"/> <!--Property Binding-->
+
+<br/>
+<br/>
+
+<br/>
+<br/>
+
+<table>
+  <tr>
+    <td [attr.colspan]="colSpan">5</td>
+  </tr>
+</table>
+
+<br/>
+<br/>
+
+<div (click)="divClicked($event)">
+  <button class="btn btn-primary" (click)="onSave($event)">Click Me !</button>
+</div>
+
+<br/>
+<br/>
+
+<p>Try to press enter, f,g or h and look at the console.</p>
+<input type="text" (keyup)="onKeyUp($event)" />
+<br/>
+<br/>
+
+<p>It will be called only if we press Enter, This is event filtering !</p>
+<input type="text" (keyup.enter)="enterPressed()" />
+<br/>
+<br/>
+
+<p>Press any key ! TARGET VARIABLE !!!</p>
+<input #anyKey type="text" (keyup)="anyKeyPressed(anyKey.value)" />
+<br/>
+<br/>
+
+
+<p>Two Way Binding ! We bind the value of this field with a variable in the class on the back !</p>
+<input type="email" #emailVar [value]="email" (keyup)="getEmail(emailVar.value)" />
+<br/>
+<br/>
+
+<p>Banana in the box, this is a tequnique for two way binding, it uses directive ngModel but to use it we need the 'Form' module!</p>
+<input type="email" [(ngModel)]="name" (keyup)="getName()" />
+<br/> 
+
+<br/> 
+<br/> 
+
+
+<h2>PIPES</h2>
+
+{{ course.title | uppercase }}
+<br/> 
+{{ course.title | uppercase | lowercase | uppercase }}
+<br/> 
+{{ course.title | lowercase }}
+<br/> 
+{{ course.students | percent }}
+<br/> 
+{{ course.students | number }}
+<br/> 
+{{ course.price | percent }}
+<br/> 
+{{ course.price | number }}
+<br/> 
+{{ course.price | currency }}
+<br/> 
+{{ course.price | currency: 'AUD' }}
+<br/> 
+{{ course.price | currency: 'AUD':true }}
+<br/> 
+{{ course.rating | number }}
+
+
+<br/> 
+<br/> 
+
+<h2>Custom Pipes :</h2>
+{{ text | summary: 100 }}

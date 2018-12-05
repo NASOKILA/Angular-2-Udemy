@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap/dist/css/bootstrap.css";
+
+/*If w have an element with all these classes at once we style its border to red !*/
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+

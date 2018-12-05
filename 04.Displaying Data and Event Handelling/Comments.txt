@@ -1,0 +1,146 @@
+
+
+class binding :
+	If the property 'isActive' is true we get one class, otherwise we get another, that's it !!!
+
+ <button type="button" class="btn btn-default btn-lg" (click)="clicked()">
+    <span class="glyphicon" [class.glyphicon-star-empty]="!isActive" [class.glyphicon-star]="isActive"></span> Star
+  </button>
+
+export class StarComponent implements OnInit {
+
+  isActive : boolean = false;
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  clicked(){
+    this.isActive = !this.isActive;
+    
+    console.log("clicked !")
+    console.log(this.isActive)
+
+  }
+
+}
+
+
+
+Adding Bootstap:
+	npm install bootstrap --save
+	and add it to the style.css file like this : @import('~bootstrap/dist/css/bootstrap.css');
+
+TARGET VARIABLES :
+	In the below example the #emailVar is the target variable user to reference the input and we can use it in the event
+	function and get its value.
+
+
+
+TWO WY BINDING:
+
+  Binding in angular works from the component to the view but to make it also from the view to the component we need a 
+  target variable like #emailVar in the below example. 
+
+  <input type="email" #emailVar [value]="email" (keyup)="getEmail(emailVar.value)" />
+  
+  email : string = "";
+  getEmail(value){
+    this.email = value;
+    console.log(this.email)
+  }
+
+
+
+Banana in the box :	
+	THIS TEQUNICHE IS USED FOR TWO WAY BINDING :
+	It uses the ngModel properti from the 'Form' Module
+	<input type="email" [(NgModule)]="email" (keyup)="getEmail(emailVar.value)" />
+	
+
+Pipes :
+	There are several types of pipes:
+	uppercase, lowercase, decimal, currency, percent
+	WE CAN CREATE OUR OWN CUSTOM PIPE TYPES !
+
+	We can chane multiple pipes
+	To call th decimal pip we need to type 'number'
+	The currency pipe gives us US dollars by default.
+	If we want another currency we have to specify it currency: 'AUD' !!!
+	currency: 'AUD':true   with true at the end we see the dollar sign as well !!!
+
+
+<h2>PIPES</h2>
+
+{{ course.title | uppercase }}
+<br/> 
+{{ course.title | lowercase }}
+<br/> 
+{{ course.students | percent }}
+<br/> 
+{{ course.students | number }}
+<br/> 
+{{ course.price | percent }}
+<br/> 
+{{ course.price | number }}
+<br/> 
+{{ course.price | currency }}
+<br/> 
+{{ course.rating | number }}
+
+
+WE CAN GENERATE PIPES FROM THE CLI
+
+
+
+
+
+Create a custom Pipe :
+	We create a class with the pipe's name that we want.
+	We need to import : import { Pipe, PipeTransform } from  '@angular/core'	
+	Our class needs to implement the PipeTransform interface and to have a transfirm() method insade it.
+	And it has to have a name specified.
+	WE PUT SOME LOGIC INTO THE transform() METHOD AND REGISTER OUR NEW Pipe IN THE Declarations array IN THE 
+	App Module.
+
+
+import { Pipe, PipeTransform } from  '@angular/core'
+
+@Pipe({
+    name : 'summary'
+})
+export class SummaryPipe implements PipeTransform {
+    
+    //receivce an optional parameter
+    //we pass in the characters count that we want the summary to be
+    //we can keep adding parameters
+    transform(value : string, charactersCount? : number){
+        
+        if(value === null)
+            return null;
+
+        //if we did not pass any charactersCount or we passed a number less than 10 
+        //we show the first 50 charactest of the text or if the text is less than that we show it' length. 
+        if(charactersCount === null || charactersCount < 10)
+            return value.substr(0, Math.min(value.length, 50)) + ' . . .';
+
+        return value.substr(0, Math.min(charactersCount, value.length)) + ' . . .';
+    }
+
+}
+
+
+	Pipes are like components, if we dont register them in a module, Angular does not know about them.
+
+
+
+
+
+
+
+
+
+
+
+
+

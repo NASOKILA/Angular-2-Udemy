@@ -1,0 +1,216 @@
+
+Reactive driven forms : 
+More control over structure and behaviour.
+They are easyer to unit test.
+
+
+First we need the ReactiveFormsModule added in the app.module.ts class:
+and FormsModule also
+
+Here we need to include FormGroup and FormControl modules, they inherit the AbstractControl class
+insade the .ts file in the component that golds the form
+we need a new FormGroup() object.
+
+we create the form in the back
+
+form = new FormGroup({
+    username : new FormControl(),
+    password : new FormControl()
+  });
+
+
+we associate the form in the html file :
+    <form [formGroup]="form">
+
+and the input fields also:
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+            FormControlName="password"
+            id="password" 
+            type="text" 
+            class="form-control">
+        </div>
+
+
+
+
+
+VALIDATIONS:
+	WE CAN ADD THE VALIDATIONS IN THE BACKEND, NOT IN THE HTML FILE !!!
+	There is a class called VALIDATORS that comes from the @angular/foms module.
+	We can use it for backend validations.
+
+
+	import { FormGroup, FormControl, Validators } from '@angular/forms';
+	It has build in STATIC methods like 'required' and 'minLength' and more.
+	THE CLASS DOES NOT NEED A NEW INSTANSE BECAUSE THE METHODS IN IT ARE STATIC.
+	AND WE ARE NOT CALLING THE METHOD BUT WE ARE PASSING REFERENCE TO IT.
+	
+
+  form = new FormGroup({
+    username : new FormControl('', Validators.required),
+    password : new FormControl('', Validators.required)
+  });
+
+we need this : 
+formControlName="password"
+
+From th html file we have a div that shows up only if the input field is invaluid and touched
+so we use the form object in the backend:
+        <div *ngIf="form.get('username').touched && form.get('username').invalid" class="alert alert-danger">Password is required.</div>
+        
+
+
+
+MULTIPLE VALIDATORS :
+	We just put htem into an array.
+
+
+  form = new FormGroup({
+    username : new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password : new FormControl('', [Validators.required, Validators.minLength(3)])
+  });
+
+
+and in the html:
+	<div *ngIf="Password.touched && Password.invalid" class="alert alert-danger">
+            <div *ngIf="Password.errors.required">Password is required.</div>     
+            <div *ngIf="Password.errors.minlength">Minimum length is {{ Password.errors.minlength.requiredLength }}.</div>     
+        </div>
+
+
+
+
+CUSTOM VALIDATION:
+import { AbstractControl, ValidationErrors } from "@angular/forms";
+
+//We will create a validator function that check is we have an empty space insade our username 
+//We name it cannotContainSpace !
+export class UsernameValidators {
+
+
+    //we use the class abstractControl, it returns ValidationErrors or null
+    //we declare it as static so now to use it we dont need an instance of the entire class.
+    static cannotContainSpace(control : AbstractControl) : ValidationErrors | null {
+        
+        //we check if we have empty strings in the 'username' !            
+        //The control.value is of type 'any' but we need to treat it as a string so we use the keyword 'as'
+        if((control.value as string).indexOf(' ') >= 0) {
+            return { cannotContainSpace : true }    //we can return additional details insade this object
+        }
+
+        return null 
+    }
+}
+
+
+
+
+
+
+
+
+
+Asynchronous operations:
+	we know them, we can apply some validations to the form like checking if the
+	username is already taken by using a server.
+
+
+
+
+
+ngSubmit :
+    Tova ni trqbva za da validirame input poletata sled kato gi submitnem.
+    We can set errors to the form like this :
+    
+  Login(){
+    
+    //here we usually use a service tht interacts with a server.
+    //we can us the form we already created in the beginning.
+    console.log(this.form.value)
+
+    this.form.setErrors({
+      invalidLogin:true
+    });
+
+  }
+
+
+
+Nested FormGroups:
+
+    In the form instead of having FormGroup containing FormControl, we can have FormGroup containing another FormGroup which holds
+    FormControls:
+
+    form = new FormGroup({
+
+        accaunt: new FormGroup({
+
+        username : new FormControl('', [
+            Validators.required, 
+            Validators.minLength(3), 
+            UsernameValidators.cannotContainSpace
+            ]),
+    
+        password : new FormControl('', [
+            Validators.required, 
+            Validators.minLength(3),
+            ])
+        })
+  });
+
+
+  We have to change the HTML as well by adding a new div with FormGroupName="account" and wrap te Form-Groups in it !!!
+
+
+
+
+
+FormArray : 
+    It's similar to using an array but in the FormControl.
+    Check the component new-course-form.
+
+
+
+
+FormBuilder :
+    We can write the same code using the Formbuilder object, we have to import it from the constructor.
+    It has 3 build in methods: array, control and group
+
+
+form = new FormGroup({
+    name : new FormControl('', Validators.required),
+    contact : new FormGroup({
+      email : new FormControl(),
+      phone: new FormControl()
+    }),
+    topics : new FormArray([])
+  });
+
+  //we can write the same code and byuild a form by using the FormBuilder object 
+  constructor(fb : FormBuilder){
+     fb.group({
+      name : ['', Validators.required],
+      contact : fb.group({
+        email : [],
+        phone : []
+      }),
+      topics : fb.array([])
+    })
+  }
+
+
+  check the form-builder.component.ts  !!!!!!!!!
+
+
+
+
+Recap Summary:
+    With Reactive Forms we build our insade our component.
+
+
+
+
+

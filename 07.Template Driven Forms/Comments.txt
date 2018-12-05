@@ -1,0 +1,175 @@
+
+ngForm :
+	basically it has additional things like the ngSubmit property. 
+	Just add #formName="ngForm" in the <form></form> tag and (ngSubmit)="submit()"
+	Form Group rappresents a form of input fieelds.
+
+<form class="container" #f="ngForm" (ngSubmit)="submit(f)">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input 
+    required
+    ngModel
+    name="firstName" 
+    #firstName="ngModel"
+    (change)="log(firstName)" 
+    type="text" 
+    id="firstName" 
+    class="form-control"
+    placeholder="First Name . . ."
+    > 
+  </div>
+  <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+    Input Field Required !
+  </div>
+
+
+  <button class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+  ngOnInit() {
+  }
+
+  log(field){
+    console.log(field)
+    console.log(field.value)
+  }
+
+  submit(f){
+     console.log(f.value)
+  }
+
+
+
+
+
+
+
+ngModelGroup :
+	This is basically grupping input fields values into an object.
+	For exampla we ga group FirstName and LastName into an object like this    
+		FullName : {FirstName : "", LastName : ""}
+	
+	This is done by basically putting the input fields into a div with an NgModelGroup attribute.
+	<div ngModelGroup="FullName" #FullName="ngModelGroup"> . . .</div>
+
+
+
+FormGroup :
+	Rapresents a group of input fields.
+
+
+
+FormControl : 
+	Rapresents only one input field, we need an ngModel here.
+
+
+
+IMPORTANT !!!
+Disable the submit button if the form is not valid.
+just add [disabled]="f.invalid" to the button.
+
+
+
+
+
+
+
+Checkboxes :
+	It's a bit deferent than the textboxes because we use a div with a class="checkbox"
+	and we put the field insade the actual label, checkout the following code.
+
+  <div class="checkbox">
+    <label>
+      <input 
+      ngModel 
+      name="isSubscribed" 
+      type="checkbox" 
+      id="isSubscribed" 
+      /> Subscribe
+    </label>
+  </div>
+
+
+
+DropDown List :
+	We will usually fill the <select> tag dinamically with data from a server.
+	It's a good practice to NOT have a default selected option.
+
+
+
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <select ngModel 
+      name="contactMethod" 
+      id="contactMethod" 
+      class="form-control">
+      <option value="" selected disabled>Contact</option>
+      <option *ngFor="let method of contactMethods" [value]="method.id">{{ method.name }}</option>
+    </select>
+  </div>
+
+
+	
+ngValue :
+
+	IF WE WANT TO RECEIVE THE FULL OBJECT AS A VALUE FROM THE DROPDOWN WE NEED TO BIND 
+	[ngValue] INSTEAD OF JUST [value].
+
+
+
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <select ngModel 
+      name="contactMethod" 
+      id="contactMethod" 
+      class="form-control">
+      <option value="" selected disabled>Contact</option>
+      <option *ngFor="let method of contactMethods" [ngValue]="method">{{ method.name }}</option>
+    </select>
+  </div>
+
+
+
+
+'multiple' attribute:
+	IF WE WANT TO SELECT SEVERAL VALUES AT ONCE IN A DROPDOWN WE NEED THE, 'multiple' ATTRIBUTE.
+	we just put the 'multiple' attribute in the <select> tag and magically it's done.	 
+
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <select 
+      multiple
+      ngModel 
+      name="contactMethod" 
+      id="contactMethod" 
+      class="form-control">
+      <option value="" selected disabled>Contact</option>
+      <option *ngFor="let method of contactMethods" [ngValue]="method">{{ method.name }}</option>
+    </select>
+  </div>
+
+	AS A RESULT WE RECEIVE AN ARRAY OF INTEGERS.
+
+
+DIAGNOSTIC TOOL:
+	This is a way for us to inspect our form.
+	{{ f.value | json }}
+
+
+RadioButtons :
+	We put the input insade the label.
+	we can render them dinamicallly like this :
+	
+  <label>Gender</label>
+  <div *ngFor="let gender of genders" class="radio">
+    <label for="">
+      <input ngModel type="radio" name="gender" [value]="gender.id">
+      {{ gender.name }}
+    </label>
+  </div>
+
+

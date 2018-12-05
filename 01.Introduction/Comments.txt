@@ -1,0 +1,56 @@
+Angular is build with Typescript,
+using typescript is easyes, clean, maintein and test.
+
+Node runs JS code outside the browser.
+
+NodeJS satest version for angular 6.9
+
+Angular CLI creates angular progects. 
+
+When in console and In folder type  code .  and vscode opens
+
+All our local files like pictures or icons go into the assets folder
+
+main.ts starts the project its like a main method.
+
+polyfills.ts file imports some skripts that are required for running angular
+sometimes the javasctipt tat angular needs does not match the JS on the browsers so
+this pollyfills.ts file filles the gap.
+
+karma is a test runner for JS code.
+
+tsconfig.json file holds settings for your typescript compiler.
+
+tslintconfig.json holds settings for tslint, tslint check our TypeScript code for errors.
+
+webpack puts all our styles and scripts in a bundle, and minifies that bundle, this is better for optimization.
+when we change a file, webpack recompiles our application and refreshes out boundle and our browser.
+webpack generates many boundles files like vendor.styles, polyfiels and injects them into our main html file.
+
+a boundle has js code in it and it uses the styles for example if we are talking about the styles.boundle.js !!!
+
+
+AngularJS 2010, Angular 2 2016, Angular 4 2016
+
+AngularJS and Anguar 2 are very deferent frameworks, Angular 2 was rewritten with TypeScript.
+Angular 4 is the same as angular 2 just the @angular/routing library is deferent, it has a new version, its very similar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

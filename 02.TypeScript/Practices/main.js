@@ -1,0 +1,18 @@
+"use strict";
+exports.__esModule = true;
+var like_component_1 = require("./like.component");
+var likeComponent = new like_component_1.LikeComponent(10, true);
+var likes;
+var isSelected;
+likeComponent.onClick();
+likes = likeComponent.likesCount();
+isSelected = likeComponent.isSelected();
+console.log("LikesCount : " + likes + ", IsSelected : " + isSelected + ".");
+likeComponent.onClick();
+likes = likeComponent.likesCount();
+isSelected = likeComponent.isSelected();
+console.log("LikesCount : " + likes + ", IsSelected : " + isSelected + ".");
+likeComponent.onClick();
+likes = likeComponent.likesCount();
+isSelected = likeComponent.isSelected();
+console.log("LikesCount : " + likes + ", IsSelected : " + isSelected + ".");
